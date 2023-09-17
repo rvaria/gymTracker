@@ -1,18 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    >
 
-    <TextView
+    <View
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="25sp"
+    />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/createRoutine"
+        android:layout_width="300sp"
+        android:layout_height="100sp"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/buttonCol"
+        android:text="Create workout routine"
+        android:textSize="22sp"
+        />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="15sp"
+        />
+
+    <Button
+        android:id="@+id/trackProgress"
+        android:layout_width="300sp"
+        android:layout_height="100sp"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/buttonCol"
+        android:text="View progress"
+        android:textSize="22sp"
+        />
+
+</LinearLayout>
