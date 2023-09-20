@@ -29,6 +29,21 @@
         />
 
     <Button
+        android:id="@+id/viewRoutine"
+        android:layout_width="300sp"
+        android:layout_height="100sp"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/buttonCol"
+        android:text="View workout routines"
+        android:textSize="22sp"
+        />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="15sp"
+        />
+
+    <Button
         android:id="@+id/trackProgress"
         android:layout_width="300sp"
         android:layout_height="100sp"

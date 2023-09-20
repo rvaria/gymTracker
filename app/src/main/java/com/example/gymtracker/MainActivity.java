@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button createRoutine;
     private String dialogPrompt;
-    private EditText inputName;
+    public EditText inputName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,13 +23,13 @@ public class MainActivity extends AppCompatActivity {
 
         createRoutine = findViewById(R.id.createRoutine);
         dialogPrompt = "Enter your workout routine name";
-        inputName = new EditText(this);
 
 
         createRoutine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                inputName = new EditText(MainActivity.this);
                 AlertDialog.Builder createBox = new AlertDialog.Builder(MainActivity.this);
                 createBox.setTitle(dialogPrompt);
                 createBox.setView(inputName);
@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         System.out.println(inputName.getText().toString());
                         Intent routine = new Intent(getApplicationContext(), CreateRoutineActivity.class);
+                        routine.putExtra("name", inputName.getText().toString());
                         startActivity(routine);
 
                     }
