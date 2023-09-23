@@ -37,10 +37,9 @@ public class MainActivity extends AppCompatActivity {
                 createBox.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        System.out.println(inputName.getText().toString());
-                        Intent routine = new Intent(getApplicationContext(), CreateRoutineActivity.class);
-                        routine.putExtra("name", inputName.getText().toString());
-                        startActivity(routine);
+                            Intent routine = new Intent(getApplicationContext(), CreateRoutineActivity.class);
+                            routine.putExtra("name", inputName.getText().toString());
+                            startActivity(routine);
 
                     }
                 });

@@ -13,11 +13,13 @@ public class CreateRoutineActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_routine);
+        setContentView(R.layout.create_routine);  
 
         Intent routine = getIntent();
         name = findViewById(R.id.workoutName);
         name.setText(routine.getExtras().getString("name"));
+
+
 
     }
 }

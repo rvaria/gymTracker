@@ -24,9 +24,20 @@
 
     <View
         android:layout_width="fill_parent"
-        android:layout_height="0.1sp"
+        android:layout_height="1sp"
         android:layout_margin="20sp"
         android:background="@color/black"
     />
+
+
+    <Button
+        android:id="@+id/addExercise"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:padding="10dp"
+        android:text="+ Add new exercise"
+        android:textColor="@color/black"
+        android:textSize="25sp"/>
 
 </LinearLayout>
