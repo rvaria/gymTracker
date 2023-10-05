@@ -1,16 +1,15 @@
 package com.example.gymtracker;
 
-import android.util.JsonReader;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
-public class ParseExercises {
+public class ParseExercises extends AppCompatActivity {
 
     private String name;
     private String type;
@@ -22,11 +21,26 @@ public class ParseExercises {
         this.muscle = muscle;
     }
 
-    public void readFile() throws FileNotFoundException {
 
-        JsonReader reader = new JsonReader(new FileReader("exercisesyuhonas.json"));
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    public String convertFile() throws IOException {
 
+        InputStream jsonFileStream = getResources().openRawResource(R.raw.exercisesyuhonas);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(jsonFileStream));
+
+        StringBuilder jsonFile = new StringBuilder();
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+            jsonFile.append(line);
+        }
+
+        return jsonFile.toString();
+
+    }
+
+    public void readJson(String file) {
+
+        Gson gson = new Gson();
 
     }
 
