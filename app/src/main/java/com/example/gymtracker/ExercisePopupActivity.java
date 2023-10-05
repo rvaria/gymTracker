@@ -1,10 +1,10 @@
 package com.example.gymtracker;
 
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
 
-public class exercisePopupActivity extends AppCompatActivity {
+
+public class ExercisePopupActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
 
