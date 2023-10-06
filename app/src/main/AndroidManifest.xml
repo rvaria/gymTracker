@@ -23,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".CreateRoutineActivity"></activity>
+        <activity android:name=".ExercisePopupActivity"></activity>
     </application>
 
 </manifest>
