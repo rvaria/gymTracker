@@ -3,9 +3,10 @@ package com.example.gymtracker;
 import android.app.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.gson.Gson;
-
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,12 +40,19 @@ public class ParseExercises extends AppCompatActivity {
 
     }
 
-    public void readJson(String file) {
+    public void readJson(String fileContents) {
 
-        Gson gson = new Gson();
-        System.out.println(file);
+        //
+        JsonElement jsonElement = JsonParser.parseString(fileContents);
+        JsonArray jsonArray = jsonElement.getAsJsonArray();
 
-        ParseExercises newObj = gson.fromJson(file, ParseExercises.class);
+        for(JsonElement exerciseElement : jsonArray) {
+            JsonObject exerciseObject = exerciseElement.getAsJsonObject();
+            String type = exerciseObject.get("category").toString();
+            if(type.equals("\"strength\"")) {
+                System.out.println(exerciseObject.get("name"));
+            }
+        }
 
     }
 

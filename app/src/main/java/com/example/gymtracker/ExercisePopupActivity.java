@@ -3,6 +3,8 @@ package com.example.gymtracker;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONException;
+
 import java.io.IOException;
 
 
