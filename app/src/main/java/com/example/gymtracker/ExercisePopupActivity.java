@@ -6,12 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.util.List;
 
 
 public class ExercisePopupActivity extends AppCompatActivity {
 
     private ParseExercises parseExercises;
     private String json;
+    private List<String> exerciseList;
 
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -22,7 +24,7 @@ public class ExercisePopupActivity extends AppCompatActivity {
 
         try {
             json = parseExercises.convertFile();
-            parseExercises.readJson(json);
+            exerciseList = parseExercises.readJson(json);
         } catch (IOException e) {
             e.printStackTrace();
         }
