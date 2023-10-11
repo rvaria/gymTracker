@@ -55,7 +55,8 @@ public class ParseExercises extends AppCompatActivity {
             JsonObject exerciseObject = exercise.getAsJsonObject();
             String type = exerciseObject.get("category").toString();
             if(type.equals("\"strength\"")) {
-                exerciseNames.add(exerciseObject.get("name").toString());
+                name = exerciseObject.get("name").toString();
+                exerciseNames.add(name.replaceAll("\"", ""));
             }
         }
 
