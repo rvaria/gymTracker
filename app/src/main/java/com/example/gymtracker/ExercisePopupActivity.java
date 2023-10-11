@@ -17,8 +17,8 @@ public class ExercisePopupActivity extends AppCompatActivity {
     private ParseExercises parseExercises;
     private String json;
     private ListView exerciseList;
-    private ArrayAdapter<String> exerciseAdapter;
     private List<String> exercises;
+    private ExerciseListAdapter listAdapter;
 
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -35,8 +35,7 @@ public class ExercisePopupActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        //exerciseAdapter = new ArrayAdapter(ExercisePopupActivity.this, android.R.layout.simple_list_item_1, exercises);
-        //exerciseList.setAdapter(exerciseAdapter);
-
+        listAdapter = new ExerciseListAdapter(this, exercises);
+        exerciseList.setAdapter(listAdapter);
     }
 }
