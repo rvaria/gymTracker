@@ -5,6 +5,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import org.json.JSONException;
 
@@ -25,6 +26,8 @@ public class ExercisePopupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.exercise_popup);
 
+        Toolbar toolbar = findViewById(R.id.popupToolbar);
+        setSupportActionBar(toolbar);
         parseExercises = new ParseExercises(this);
         exerciseList = findViewById(R.id.exerciseList);
 

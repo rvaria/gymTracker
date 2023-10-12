@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class CreateRoutineActivity extends AppCompatActivity {
 
@@ -19,6 +20,8 @@ public class CreateRoutineActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_routine);
 
+        Toolbar toolbar = findViewById(R.id.routineToolbar);
+        setSupportActionBar(toolbar);
         addExercise = findViewById(R.id.addExercise);
 
         Intent routine = getIntent();
