@@ -8,6 +8,11 @@
     android:orientation="vertical"
     >
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/popupToolbar"
         android:layout_width="match_parent"
@@ -15,6 +20,15 @@
         android:background="@color/toolbar"
         android:minHeight="?attr/actionBarSize"
         />
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchExercise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+         />
+
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/exerciseList"

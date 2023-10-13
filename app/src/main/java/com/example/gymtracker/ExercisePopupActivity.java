@@ -5,6 +5,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 
 import org.json.JSONException;
@@ -20,6 +21,7 @@ public class ExercisePopupActivity extends AppCompatActivity {
     private ListView exerciseList;
     private List<String> exercises;
     private ExerciseListAdapter listAdapter;
+    private SearchView searchExercises;
 
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -40,5 +42,19 @@ public class ExercisePopupActivity extends AppCompatActivity {
 
         listAdapter = new ExerciseListAdapter(this, exercises);
         exerciseList.setAdapter(listAdapter);
+        searchExercises = findViewById((R.id.searchExercise));
+
+        searchExercises.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                listAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
     }
 }
