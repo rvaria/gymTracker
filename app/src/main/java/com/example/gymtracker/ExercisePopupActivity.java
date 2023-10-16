@@ -53,6 +53,7 @@ public class ExercisePopupActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 listAdapter.getFilter().filter(newText);
+                listAdapter.notifyDataSetChanged();
                 return false;
             }
         });

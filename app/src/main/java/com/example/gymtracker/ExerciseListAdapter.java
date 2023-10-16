@@ -7,18 +7,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class ExerciseListAdapter extends ArrayAdapter<String> {
+public class ExerciseListAdapter extends ArrayAdapter<String> implements Filterable {
 
     private Activity activity;
     private List<String> exerciseItems;
     private List<String> displayItems;
-    private List<String> finalList;
     private TextView exerciseName;
     private CheckBox checkBox;
     private String item;
@@ -70,7 +70,8 @@ public class ExerciseListAdapter extends ArrayAdapter<String> {
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                finalList = (List<String>) results.values;
+                exerciseItems = (List<String>) results.values;
+                notifyDataSetChanged();
 
             }
         };
