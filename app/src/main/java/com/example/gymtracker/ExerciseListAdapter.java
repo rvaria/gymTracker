@@ -6,9 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,7 @@ public class ExerciseListAdapter extends ArrayAdapter<String> implements Filtera
 
 
     public ExerciseListAdapter(Activity activity, List<String> exerciseItems) {
-        super(activity ,R.layout.exercise_item, exerciseItems);
+        super(activity, R.layout.exercise_item, exerciseItems);
         this.activity = activity;
         this.exerciseItems = exerciseItems;
 
@@ -43,6 +45,15 @@ public class ExerciseListAdapter extends ArrayAdapter<String> implements Filtera
         item = exerciseItems.get(position);
         exerciseName.setText(item);
 
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    String chosenExercise = exerciseItems.get(position);
+                    Toast.makeText(getContext(), chosenExercise, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
         return convertView;
     }
 
@@ -55,9 +66,9 @@ public class ExerciseListAdapter extends ArrayAdapter<String> implements Filtera
                 FilterResults filterResults = new FilterResults();
                 displayItems = new ArrayList<String>();
 
-                if(exerciseQuery.length() > 0) {
-                    for(String filter : exerciseItems) {
-                        if(filter.toLowerCase().contains(exerciseQuery)) {
+                if (exerciseQuery.length() > 0) {
+                    for (String filter : exerciseItems) {
+                        if (filter.toLowerCase().contains(exerciseQuery)) {
                             displayItems.add(filter);
 
                         }
