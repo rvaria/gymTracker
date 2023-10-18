@@ -20,16 +20,17 @@ public class ExerciseListAdapter extends ArrayAdapter<String> implements Filtera
 
     private Activity activity;
     private List<String> exerciseItems;
+    private List<String> originalItems;
     private List<String> displayItems;
     private TextView exerciseName;
     private CheckBox checkBox;
     private String item;
 
-
     public ExerciseListAdapter(Activity activity, List<String> exerciseItems) {
         super(activity, R.layout.exercise_item, exerciseItems);
         this.activity = activity;
         this.exerciseItems = exerciseItems;
+        this.originalItems = new ArrayList<>(exerciseItems);
 
     }
 
@@ -47,7 +48,7 @@ public class ExerciseListAdapter extends ArrayAdapter<String> implements Filtera
 
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
+                if (isChecked) {
                     String chosenExercise = exerciseItems.get(position);
                     Toast.makeText(getContext(), chosenExercise, Toast.LENGTH_SHORT).show();
                 }
@@ -64,9 +65,13 @@ public class ExerciseListAdapter extends ArrayAdapter<String> implements Filtera
             protected FilterResults performFiltering(CharSequence constraint) {
                 String exerciseQuery = constraint.toString().toLowerCase();
                 FilterResults filterResults = new FilterResults();
+
                 displayItems = new ArrayList<String>();
 
-                if (exerciseQuery.length() > 0) {
+                if(exerciseQuery.isEmpty()) {
+                    displayItems.addAll(originalItems);
+                } else {
+                    displayItems.clear();
                     for (String filter : exerciseItems) {
                         if (filter.toLowerCase().contains(exerciseQuery)) {
                             displayItems.add(filter);
@@ -74,15 +79,18 @@ public class ExerciseListAdapter extends ArrayAdapter<String> implements Filtera
                         }
                     }
                 }
+
                 filterResults.count = displayItems.size();
                 filterResults.values = displayItems;
                 return filterResults;
+
             }
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 exerciseItems = (List<String>) results.values;
                 notifyDataSetChanged();
+                // System.out.println("ITEMS IN THE LIST - " + exerciseItems);
 
             }
         };
