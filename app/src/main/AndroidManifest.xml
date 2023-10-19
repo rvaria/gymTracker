@@ -24,6 +24,7 @@
         </activity>
         <activity android:name=".CreateRoutineActivity"></activity>
         <activity android:name=".ExercisePopupActivity"></activity>
+        <activity android:name=".DisplayRoutineActivity"></activity>
     </application>
 
 </manifest>

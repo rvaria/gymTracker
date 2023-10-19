@@ -13,7 +13,7 @@ public class CreateRoutineActivity extends AppCompatActivity {
 
     private TextView name;
     private Button addExercise;
-
+    private String routineName;
 
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -26,12 +26,14 @@ public class CreateRoutineActivity extends AppCompatActivity {
 
         Intent routine = getIntent();
         name = findViewById(R.id.workoutName);
-        name.setText(routine.getExtras().getString("name"));
+        routineName = routine.getExtras().getString("name");
+        name.setText(routineName);
 
         addExercise.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent popup = new Intent(getApplicationContext(), ExercisePopupActivity.class);
+                popup.putExtra("name", routineName);
                 startActivity(popup);
             }
         });

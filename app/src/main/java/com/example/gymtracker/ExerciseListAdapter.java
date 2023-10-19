@@ -10,11 +10,8 @@ import android.widget.CompoundButton;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class ExerciseListAdapter extends ArrayAdapter<String> implements Filterable {
 
@@ -25,12 +22,14 @@ public class ExerciseListAdapter extends ArrayAdapter<String> implements Filtera
     private TextView exerciseName;
     private CheckBox checkBox;
     private String item;
+    private int count;
 
     public ExerciseListAdapter(Activity activity, List<String> exerciseItems) {
         super(activity, R.layout.exercise_item, exerciseItems);
         this.activity = activity;
         this.exerciseItems = exerciseItems;
         this.originalItems = new ArrayList<>(exerciseItems);
+        count = 0;
 
     }
 
@@ -48,9 +47,15 @@ public class ExerciseListAdapter extends ArrayAdapter<String> implements Filtera
 
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                ExercisePopupActivity exercisePopupActivity = (ExercisePopupActivity) activity;
                 if (isChecked) {
-                    String chosenExercise = exerciseItems.get(position);
-                    Toast.makeText(getContext(), chosenExercise, Toast.LENGTH_SHORT).show();
+                    count++;
+                    exercisePopupActivity.setItems(exerciseItems.get(position));
+                    exercisePopupActivity.setCount(count);
+                } else {
+                    count--;
+                    exercisePopupActivity.removeItems(exerciseItems.get(position));
+                    exercisePopupActivity.setCount(count);
                 }
             }
         });
@@ -68,7 +73,7 @@ public class ExerciseListAdapter extends ArrayAdapter<String> implements Filtera
 
                 displayItems = new ArrayList<String>();
 
-                if(exerciseQuery.isEmpty()) {
+                if (exerciseQuery.isEmpty()) {
                     displayItems.addAll(originalItems);
                 } else {
                     displayItems.clear();

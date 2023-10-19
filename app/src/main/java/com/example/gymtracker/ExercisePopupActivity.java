@@ -1,16 +1,16 @@
 package com.example.gymtracker;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
-
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
-
-import org.json.JSONException;
-
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -22,6 +22,9 @@ public class ExercisePopupActivity extends AppCompatActivity {
     private List<String> exercises;
     private ExerciseListAdapter listAdapter;
     private SearchView searchExercises;
+    private Button contButton;
+    private ArrayList<String> chosenExercises;
+    private String routineName;
 
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -30,8 +33,14 @@ public class ExercisePopupActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.popupToolbar);
         setSupportActionBar(toolbar);
+
         parseExercises = new ParseExercises(this);
         exerciseList = findViewById(R.id.exerciseList);
+        contButton = findViewById(R.id.contButton);
+        chosenExercises = new ArrayList<>();
+
+        Intent getName = getIntent();
+        routineName = getName.getExtras().getString("name");
 
         try {
             json = parseExercises.convertFile();
@@ -57,5 +66,32 @@ public class ExercisePopupActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        contButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(chosenExercises.size() != 0) {
+                    Intent displayRoutine = new Intent(getApplicationContext(), DisplayRoutineActivity.class);
+                    displayRoutine.putStringArrayListExtra("chosenExercises", chosenExercises);
+                    displayRoutine.putExtra("name", routineName);
+                    startActivity(displayRoutine);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Please add an exercise!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
+
+    public void setCount(int count) {
+        contButton.setText("Add (" + Integer.toString(count) + ")");
+    }
+
+    public void setItems(String item) {
+        chosenExercises.add(item);
+    }
+
+    public void removeItems(String item) {
+        chosenExercises.remove(item);
+    }
+
 }

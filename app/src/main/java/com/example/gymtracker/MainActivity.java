@@ -41,9 +41,9 @@ public class MainActivity extends AppCompatActivity {
                 createBox.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                            Intent routine = new Intent(getApplicationContext(), CreateRoutineActivity.class);
-                            routine.putExtra("name", inputName.getText().toString());
-                            startActivity(routine);
+                        Intent createRoutine = new Intent(getApplicationContext(), CreateRoutineActivity.class);
+                        createRoutine.putExtra("name", inputName.getText().toString());
+                        startActivity(createRoutine);
 
                     }
                 });
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 createBox.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                       dialog.dismiss();
+                        dialog.dismiss();
                     }
                 });
 
