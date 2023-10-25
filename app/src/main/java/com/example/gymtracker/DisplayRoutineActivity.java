@@ -10,6 +10,7 @@ public class DisplayRoutineActivity extends AppCompatActivity {
 
     private ArrayList<String> exercises;
     private TextView routineName;
+    private ExerciseDatabase exerciseDatabase;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -20,7 +21,7 @@ public class DisplayRoutineActivity extends AppCompatActivity {
         routineName = findViewById(R.id.name);
         routineName.setText(getRoutineName.getExtras().getString("name"));
         exercises = getIntent().getStringArrayListExtra("chosenExercises");
-        System.out.println("EXERCISES: " + exercises);
 
     }
+
 }
