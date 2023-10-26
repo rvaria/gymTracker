@@ -22,6 +22,14 @@ public class DisplayRoutineActivity extends AppCompatActivity {
         routineName.setText(getRoutineName.getExtras().getString("name"));
         exercises = getIntent().getStringArrayListExtra("chosenExercises");
 
+        ExerciseDatabase exerciseDatabase = new ExerciseDatabase(this);
+
+        try {
+            exerciseDatabase.addRow( "Test", "test", 1, 1.5);
+            exerciseDatabase.results();
+        } catch(Exception e) {
+            System.out.println("Not working");
+        }
     }
 
 }
