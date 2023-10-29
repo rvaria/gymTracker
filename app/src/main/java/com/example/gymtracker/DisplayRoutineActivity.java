@@ -9,7 +9,8 @@ import java.util.ArrayList;
 public class DisplayRoutineActivity extends AppCompatActivity {
 
     private ArrayList<String> exercises;
-    private TextView routineName;
+    private TextView routine;
+    private String routineName;
     private ExerciseDatabase exerciseDatabase;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -18,14 +19,18 @@ public class DisplayRoutineActivity extends AppCompatActivity {
         setContentView(R.layout.display_routine);
 
         Intent getRoutineName = getIntent();
-        routineName = findViewById(R.id.name);
-        routineName.setText(getRoutineName.getExtras().getString("name"));
+        routine = findViewById(R.id.name);
+        routineName = getRoutineName.getExtras().getString("name");
+        routine.setText(routineName);
         exercises = getIntent().getStringArrayListExtra("chosenExercises");
 
         ExerciseDatabase exerciseDatabase = new ExerciseDatabase(this);
 
         try {
-            exerciseDatabase.addRow( "Test", "test", 1, 1.5);
+            Boolean checkInitial = exerciseDatabase.addInitialData(routineName, exercises);
+            System.out.println("Initial data: " + checkInitial);
+            Boolean checkRow = exerciseDatabase.addRow( "test", 1, 1.5);
+            System.out.println("Initial row: " + checkRow);
             exerciseDatabase.results();
         } catch(Exception e) {
             System.out.println("Not working");

@@ -7,12 +7,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabaseLockedException;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+
 public class ExerciseDatabase extends SQLiteOpenHelper {
 
     private SQLiteDatabase exerciseDatabase;
     private static final String table = "exercise_data";
     private static final String idCol = "id";
-    private static final String nameCol = "name";
+    private static final String routineCol = "routine_name";
+    private static final String nameCol = "exercise_name";
     private static final String dateCol = "date";
     private static final String repsCol = "reps";
     private static final String weightCol = "weight";
@@ -26,6 +29,7 @@ public class ExerciseDatabase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String createQuery = "CREATE TABLE " + table + "("
                 + idCol + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + routineCol + "TEXT, "
                 + nameCol + " TEXT, "
                 + dateCol + " TEXT, "
                 + repsCol + " INTEGER, "
@@ -39,11 +43,27 @@ public class ExerciseDatabase extends SQLiteOpenHelper {
 
     }
 
-    public boolean addRow(String name, String date, int reps, double weight) {
+    public boolean addInitialData(String routine, ArrayList<String> exercises) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(nameCol, name);
+        for(String exercise : exercises) {
+            values.put(routineCol, routine);
+            values.put(nameCol, exercise);
+        }
+
+        long insert = db.insert(table, null, values);
+        if(insert == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean addRow(String date, int reps, double weight) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
         values.put(dateCol, date);
         values.put(repsCol, reps);
         values.put(weightCol, weight);
@@ -64,12 +84,11 @@ public class ExerciseDatabase extends SQLiteOpenHelper {
 
         if(cursor.moveToFirst()) {
             do {
-                String name = cursor.getString(1);
                 String date = cursor.getString(2);
                 int reps = cursor.getInt(3);
                 double weight = cursor.getDouble(4);
 
-                System.out.println("TEST OF ROW" + " name: " + name + " date: " + date
+                System.out.println("TEST OF ROW" + " date: " + date
                         + " reps: " + reps + " weight: " + weight);
             } while(cursor.moveToNext());
         }
