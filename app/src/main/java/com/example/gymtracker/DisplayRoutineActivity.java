@@ -33,7 +33,7 @@ public class DisplayRoutineActivity extends AppCompatActivity {
             exerciseDatabase.addExercises(exercises, id);
 
 
-            ArrayList<String> data = new ArrayList<>(exerciseDatabase.results());
+            ArrayList<String> data = new ArrayList<>(exerciseDatabase.exercisesList(routineName));
             System.out.println("THE DATA IS " + data);
 
         } catch(Exception e) {

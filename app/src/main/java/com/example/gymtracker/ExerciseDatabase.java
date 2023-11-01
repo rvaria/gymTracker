@@ -26,7 +26,6 @@ public class ExerciseDatabase extends SQLiteOpenHelper {
     private static final String repsCol = "reps";
     private static final String weightCol = "weight";
     private static final int version = 1;
-    private ArrayList<String> allData;
 
     public ExerciseDatabase(Context context) {
         super(context, database, null, version);
@@ -103,24 +102,29 @@ public class ExerciseDatabase extends SQLiteOpenHelper {
         }
     }
 
-    public List<String> results() {
+    public List<String> exercisesList(String routine) {
 
-        String queryString = "SELECT * FROM " + exerciseTable + ", " + routineTable;
+        String queryString = "SELECT " + nameCol + " FROM " + exerciseTable
+                + " INNER JOIN " + routineTable + " ON "
+                + routineTable + "." + routineID + "=" + exerciseTable + "." + routineIDKey
+                + " WHERE " + routineTable + "." + routineCol + " = '" + routine + "'";
 
-        allData = new ArrayList<>();
+
+        ArrayList<String> exercises = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(queryString, null);
 
         if(cursor.moveToFirst()) {
             do {
-                allData.add(cursor.getString(0));
-                allData.add(cursor.getString(1));
-                allData.add(cursor.getString(2));
+                exercises.add(cursor.getString(0));
 
             } while(cursor.moveToNext());
         }
+
         cursor.close();
-        return allData;
+        return exercises;
+
     }
+    
 }
