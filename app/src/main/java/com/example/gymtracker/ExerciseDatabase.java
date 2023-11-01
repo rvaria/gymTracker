@@ -8,34 +8,53 @@ import android.database.sqlite.SQLiteDatabaseLockedException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ExerciseDatabase extends SQLiteOpenHelper {
 
-    private SQLiteDatabase exerciseDatabase;
-    private static final String table = "exercise_data";
-    private static final String idCol = "id";
+    private static final String database = "exercise_database";
+    private static final String routineTable = "routine";
+    private static final String exerciseTable = "exercise";
+    private static final String dataTable = "user_data";
+    private static final String routineID = "routine_id";
+    private static final String routineIDKey = "routine_id_key";
+    private static final String exerciseID = "exercise_id";
+    private static final String dataID = "data_id";
     private static final String routineCol = "routine_name";
     private static final String nameCol = "exercise_name";
     private static final String dateCol = "date";
     private static final String repsCol = "reps";
     private static final String weightCol = "weight";
     private static final int version = 1;
+    private ArrayList<String> allData;
 
     public ExerciseDatabase(Context context) {
-        super(context, table, null, version);
+        super(context, database, null, version);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createQuery = "CREATE TABLE " + table + "("
-                + idCol + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + routineCol + "TEXT, "
+        String routine = "CREATE TABLE " + routineTable + "("
+                + routineID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + routineCol + " TEXT)";
+
+        String exercise = "CREATE TABLE " + exerciseTable + "("
+                + exerciseID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + nameCol + " TEXT, "
+                + routineIDKey + " INTEGER, FOREIGN KEY (" + routineIDKey + ") REFERENCES "
+                + routineTable + "(" + routineID + "))";
+
+        String data = "CREATE TABLE " + dataTable + "("
+                + dataID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + dateCol + " TEXT, "
                 + repsCol + " INTEGER, "
                 + weightCol + " REAL)";
 
-        db.execSQL(createQuery);
+        db.execSQL("PRAGMA foreign_keys=ON");
+        db.execSQL(routine);
+        db.execSQL(exercise);
+       // db.execSQL(data);
+
     }
 
     @Override
@@ -43,24 +62,31 @@ public class ExerciseDatabase extends SQLiteOpenHelper {
 
     }
 
-    public boolean addInitialData(String routine, ArrayList<String> exercises) {
+    public long addRoutine(String routine) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(routineCol, routine);
+
+        long id = db.insert(routineTable, null, values);
+        return id;
+    }
+
+    public void addExercises(ArrayList<String> exercises, long keyID) {
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         for(String exercise : exercises) {
-            values.put(routineCol, routine);
             values.put(nameCol, exercise);
+            values.put(routineIDKey, keyID);
+            db.insert(exerciseTable, null, values);
+
         }
 
-        long insert = db.insert(table, null, values);
-        if(insert == -1) {
-            return false;
-        } else {
-            return true;
-        }
     }
 
-    public boolean addRow(String date, int reps, double weight) {
+    public boolean addData(String date, int reps, double weight) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
@@ -68,7 +94,7 @@ public class ExerciseDatabase extends SQLiteOpenHelper {
         values.put(repsCol, reps);
         values.put(weightCol, weight);
 
-        long insert = db.insert(table, null, values);
+        long insert = db.insert(dataTable, null, values);
 
         if(insert == -1) {
             return false;
@@ -77,21 +103,24 @@ public class ExerciseDatabase extends SQLiteOpenHelper {
         }
     }
 
-    public void results() {
-        String queryString = "SELECT * FROM " + table;
+    public List<String> results() {
+
+        String queryString = "SELECT * FROM " + exerciseTable + ", " + routineTable;
+
+        allData = new ArrayList<>();
+
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(queryString, null);
 
         if(cursor.moveToFirst()) {
             do {
-                String date = cursor.getString(2);
-                int reps = cursor.getInt(3);
-                double weight = cursor.getDouble(4);
+                allData.add(cursor.getString(0));
+                allData.add(cursor.getString(1));
+                allData.add(cursor.getString(2));
 
-                System.out.println("TEST OF ROW" + " date: " + date
-                        + " reps: " + reps + " weight: " + weight);
             } while(cursor.moveToNext());
         }
         cursor.close();
+        return allData;
     }
 }

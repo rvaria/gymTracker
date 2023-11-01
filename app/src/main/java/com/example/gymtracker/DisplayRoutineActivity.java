@@ -11,7 +11,9 @@ public class DisplayRoutineActivity extends AppCompatActivity {
     private ArrayList<String> exercises;
     private TextView routine;
     private String routineName;
+    private ArrayList<String> exercisesList;
     private ExerciseDatabase exerciseDatabase;
+    private long id;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -27,11 +29,13 @@ public class DisplayRoutineActivity extends AppCompatActivity {
         ExerciseDatabase exerciseDatabase = new ExerciseDatabase(this);
 
         try {
-            Boolean checkInitial = exerciseDatabase.addInitialData(routineName, exercises);
-            System.out.println("Initial data: " + checkInitial);
-            Boolean checkRow = exerciseDatabase.addRow( "test", 1, 1.5);
-            System.out.println("Initial row: " + checkRow);
-            exerciseDatabase.results();
+            id = exerciseDatabase.addRoutine(routineName);
+            exerciseDatabase.addExercises(exercises, id);
+
+
+            ArrayList<String> data = new ArrayList<>(exerciseDatabase.results());
+            System.out.println("THE DATA IS " + data);
+
         } catch(Exception e) {
             System.out.println("Not working");
         }
