@@ -25,6 +25,8 @@ public class ExercisePopupActivity extends AppCompatActivity {
     private Button contButton;
     private ArrayList<String> chosenExercises;
     private String routineName;
+    private ExerciseDatabase exerciseDatabase;
+    private long id;
 
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -38,6 +40,8 @@ public class ExercisePopupActivity extends AppCompatActivity {
         exerciseList = findViewById(R.id.exerciseList);
         contButton = findViewById(R.id.contButton);
         chosenExercises = new ArrayList<>();
+
+        exerciseDatabase = new ExerciseDatabase(this);
 
         Intent getName = getIntent();
         routineName = getName.getExtras().getString("name");
@@ -71,6 +75,15 @@ public class ExercisePopupActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(chosenExercises.size() != 0) {
+
+                    try {
+                        id = exerciseDatabase.addRoutine(routineName);
+                        exerciseDatabase.addExercises(chosenExercises, id);
+
+                    } catch(Exception e) {
+                        System.out.println("Not working");
+                    }
+
                     Intent displayRoutine = new Intent(getApplicationContext(), DisplayRoutineActivity.class);
                     displayRoutine.putStringArrayListExtra("chosenExercises", chosenExercises);
                     displayRoutine.putExtra("name", routineName);

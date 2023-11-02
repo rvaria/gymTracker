@@ -13,7 +13,6 @@ public class DisplayRoutineActivity extends AppCompatActivity {
     private String routineName;
     private ArrayList<String> exercisesList;
     private ExerciseDatabase exerciseDatabase;
-    private long id;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -28,17 +27,9 @@ public class DisplayRoutineActivity extends AppCompatActivity {
 
         ExerciseDatabase exerciseDatabase = new ExerciseDatabase(this);
 
-        try {
-            id = exerciseDatabase.addRoutine(routineName);
-            exerciseDatabase.addExercises(exercises, id);
+        ArrayList<String> data = new ArrayList<>(exerciseDatabase.exercisesList(routineName));
+        System.out.println("THE DATA IS " + data);
 
-
-            ArrayList<String> data = new ArrayList<>(exerciseDatabase.exercisesList(routineName));
-            System.out.println("THE DATA IS " + data);
-
-        } catch(Exception e) {
-            System.out.println("Not working");
-        }
     }
 
 }
