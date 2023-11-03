@@ -16,26 +16,12 @@
         android:minHeight="?attr/actionBarSize"
         />
 
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="15sp"
-        />
-
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor = "@color/black"
-        android:layout_gravity="center"
-        android:textStyle="bold"
-        android:textSize="35sp"
-        />
-
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1sp"
-        android:layout_margin="20sp"
-        android:background="@color/black"
+    <ListView
+        android:id="@+id/routines"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@android:color/darker_gray"
+        android:dividerHeight="0.1dp"
         />
 
 </LinearLayout>

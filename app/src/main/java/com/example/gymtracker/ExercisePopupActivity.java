@@ -84,8 +84,7 @@ public class ExercisePopupActivity extends AppCompatActivity {
                         System.out.println("Not working");
                     }
 
-                    Intent displayRoutine = new Intent(getApplicationContext(), DisplayRoutineActivity.class);
-                    displayRoutine.putStringArrayListExtra("chosenExercises", chosenExercises);
+                    Intent displayRoutine = new Intent(getApplicationContext(), DisplayWorkoutActivity.class);
                     displayRoutine.putExtra("name", routineName);
                     startActivity(displayRoutine);
                 } else {

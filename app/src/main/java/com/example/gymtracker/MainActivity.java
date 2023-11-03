@@ -14,6 +14,7 @@ import android.widget.EditText;
 public class MainActivity extends AppCompatActivity {
 
     private Button createRoutine;
+    private Button viewRoutine;
     private String dialogPrompt;
     public EditText inputName;
 
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         createRoutine = findViewById(R.id.createRoutine);
+        viewRoutine = findViewById(R.id.viewRoutine);
         dialogPrompt = "Enter your workout routine name";
 
 
@@ -41,9 +43,9 @@ public class MainActivity extends AppCompatActivity {
                 createBox.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent createRoutine = new Intent(getApplicationContext(), CreateRoutineActivity.class);
-                        createRoutine.putExtra("name", inputName.getText().toString());
-                        startActivity(createRoutine);
+                        Intent create = new Intent(getApplicationContext(), CreateRoutineActivity.class);
+                        create.putExtra("name", inputName.getText().toString());
+                        startActivity(create);
 
                     }
                 });
@@ -56,6 +58,15 @@ public class MainActivity extends AppCompatActivity {
                 });
 
                 createBox.show();
+
+            }
+        });
+
+        viewRoutine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent view = new Intent(getApplicationContext(), DisplayRoutinesActivity.class);
+                startActivity(view);
 
             }
         });

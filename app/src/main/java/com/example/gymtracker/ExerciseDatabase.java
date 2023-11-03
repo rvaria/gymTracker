@@ -102,6 +102,24 @@ public class ExerciseDatabase extends SQLiteOpenHelper {
         }
     }
 
+    public List<String> routinesList() {
+
+        String query = "SELECT " + routineCol + " FROM " + routineTable;
+
+        ArrayList<String> routines = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        if(cursor.moveToFirst()) {
+            do {
+                routines.add(cursor.getString(0));
+            } while(cursor.moveToNext());
+        }
+
+        return routines;
+    }
+
     public List<String> exercisesList(String routine) {
 
         String queryString = "SELECT " + nameCol + " FROM " + exerciseTable
