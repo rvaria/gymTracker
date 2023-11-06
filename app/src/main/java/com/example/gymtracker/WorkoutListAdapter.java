@@ -1,6 +1,8 @@
 package com.example.gymtracker;
 
 import android.app.Activity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +45,7 @@ public class WorkoutListAdapter extends ArrayAdapter<String> {
         item = workoutItems.get(position);
         exercise.setText(item);
 
+        System.out.println("POSITION IS: " + position);
         return convertView;
     }
-
 }
