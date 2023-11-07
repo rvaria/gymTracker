@@ -93,7 +93,9 @@ public class ExerciseListAdapter extends ArrayAdapter<String> implements Filtera
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                exerciseItems = (List<String>) results.values;
+                List<String> filteredItems = (List<String>) results.values;
+                exerciseItems.clear();
+                exerciseItems.addAll(filteredItems);
                 notifyDataSetChanged();
                 // System.out.println("ITEMS IN THE LIST - " + exerciseItems);
 
