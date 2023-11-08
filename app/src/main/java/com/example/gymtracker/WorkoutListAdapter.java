@@ -10,6 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,18 +26,23 @@ public class WorkoutListAdapter extends ArrayAdapter<String> {
     private EditText repEntry;
     private EditText weightEntry;
     private String item;
+    private List<ExerciseData> dataList;
 
-    public WorkoutListAdapter(Activity activity, List<String> workoutItems) {
+    public WorkoutListAdapter(Activity activity, List<String> workoutItems, List<ExerciseData> dataList) {
         super(activity, R.layout.exercise_item, workoutItems);
         this.activity = activity;
         this.workoutItems = workoutItems;
+        this.dataList = dataList;
 
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-        LayoutInflater inflater = LayoutInflater.from(activity);
-        convertView = inflater.inflate(R.layout.workout_item, parent, false);
+        if (convertView == null) {
+            LayoutInflater inflater = LayoutInflater.from(activity);
+            convertView = inflater.inflate(R.layout.workout_item, parent, false);
+
+        }
 
         exercise = convertView.findViewById(R.id.exerciseName);
         reps = convertView.findViewById(R.id.reps);
@@ -45,7 +53,6 @@ public class WorkoutListAdapter extends ArrayAdapter<String> {
         item = workoutItems.get(position);
         exercise.setText(item);
 
-        System.out.println("POSITION IS: " + position);
         return convertView;
     }
 }

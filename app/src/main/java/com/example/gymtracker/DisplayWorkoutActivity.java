@@ -6,11 +6,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class DisplayWorkoutActivity extends AppCompatActivity {
 
@@ -23,6 +27,7 @@ public class DisplayWorkoutActivity extends AppCompatActivity {
     private ListView workout;
     private TextView displayDate;
     private String date;
+    private List<ExerciseData> dataList;
     private int cDay;
     private int cMonth;
     private int cYear;
@@ -52,8 +57,12 @@ public class DisplayWorkoutActivity extends AppCompatActivity {
         exerciseDatabase = new ExerciseDatabase(this);
 
         ArrayList<String> data = new ArrayList<>(exerciseDatabase.exercisesList(routineName));
+        dataList = new ArrayList<>();
+        for(String exerciseName : data) {
+            dataList.add(new ExerciseData(exerciseName));
+        }
 
-        workoutListAdapter = new WorkoutListAdapter(this, data);
+        workoutListAdapter = new WorkoutListAdapter(this, data, dataList);
         workout.setAdapter(workoutListAdapter);
 
         openCalendar.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +81,7 @@ public class DisplayWorkoutActivity extends AppCompatActivity {
         });
     }
 
-    public String datePicker() {
+    public void datePicker() {
 
         DatePickerDialog datePicker = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -84,6 +93,6 @@ public class DisplayWorkoutActivity extends AppCompatActivity {
 
         datePicker.show();
 
-        return date;
     }
+
 }

@@ -1,65 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/mainToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/toolbar"
-        android:minHeight="?attr/actionBarSize"
-        />
+        android:minHeight="?attr/actionBarSize" />
 
     <View
         android:layout_width="wrap_content"
-        android:layout_height="25sp"
-    />
+        android:layout_height="25sp" />
 
     <Button
         android:id="@+id/createRoutine"
         android:layout_width="300sp"
-        android:layout_height="100sp"
+        android:layout_height="70sp"
         android:layout_gravity="center"
+        android:background="@drawable/round_shape"
         android:backgroundTint="@color/buttonCol"
         android:text="Create workout routine"
-        android:textSize="22sp"
-        />
+        android:textSize="20sp" />
 
     <View
         android:layout_width="wrap_content"
-        android:layout_height="15sp"
-        />
+        android:layout_height="15sp" />
 
     <Button
         android:id="@+id/viewRoutine"
         android:layout_width="300sp"
-        android:layout_height="100sp"
+        android:layout_height="70sp"
         android:layout_gravity="center"
+        android:background="@drawable/round_shape"
         android:backgroundTint="@color/buttonCol"
         android:text="View workout routines"
-        android:textSize="22sp"
-        />
+        android:textSize="20sp" />
 
     <View
         android:layout_width="wrap_content"
-        android:layout_height="15sp"
-        />
+        android:layout_height="15sp" />
 
     <Button
         android:id="@+id/trackProgress"
         android:layout_width="300sp"
-        android:layout_height="100sp"
+        android:layout_height="70sp"
         android:layout_gravity="center"
+        android:background="@drawable/round_shape"
         android:backgroundTint="@color/buttonCol"
         android:text="View progress"
-        android:textSize="22sp"
-        />
+        android:textSize="20sp" />
 
 </LinearLayout>
