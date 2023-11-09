@@ -27,7 +27,7 @@ public class DisplayWorkoutActivity extends AppCompatActivity {
     private ListView workout;
     private TextView displayDate;
     private String date;
-    private List<ExerciseData> dataList;
+    private List<ExerciseData> exerciseItems;
     private int cDay;
     private int cMonth;
     private int cYear;
@@ -57,12 +57,12 @@ public class DisplayWorkoutActivity extends AppCompatActivity {
         exerciseDatabase = new ExerciseDatabase(this);
 
         ArrayList<String> data = new ArrayList<>(exerciseDatabase.exercisesList(routineName));
-        dataList = new ArrayList<>();
+        exerciseItems = new ArrayList<>();
         for(String exerciseName : data) {
-            dataList.add(new ExerciseData(exerciseName));
+            exerciseItems.add(new ExerciseData(exerciseName));
         }
 
-        workoutListAdapter = new WorkoutListAdapter(this, data, dataList);
+        workoutListAdapter = new WorkoutListAdapter(this, exerciseItems);
         workout.setAdapter(workoutListAdapter);
 
         openCalendar.setOnClickListener(new View.OnClickListener() {
