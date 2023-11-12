@@ -5,11 +5,13 @@ public class ExerciseData {
     private String exerciseName;
     private String reps;
     private String weight;
+    private String position;
 
     public ExerciseData(String exerciseName) {
         this.exerciseName = exerciseName;
         this.reps = "";
         this.weight = "";
+        this.position = "";
 
     }
 
@@ -35,5 +37,13 @@ public class ExerciseData {
 
     public String getWeight() {
         return weight;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public String getPosition() {
+        return position;
     }
 }

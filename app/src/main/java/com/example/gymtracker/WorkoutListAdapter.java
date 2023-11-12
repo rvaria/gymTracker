@@ -42,6 +42,7 @@ public class WorkoutListAdapter extends ArrayAdapter<ExerciseData> {
         ExerciseData item = workoutItems.get(position);
         exercise.setText(item.getExerciseName());
 
+        item.setPosition(String.valueOf(position + 1));
         repEntry.setText(item.getReps());
         weightEntry.setText(item.getWeight());
 
@@ -58,7 +59,11 @@ public class WorkoutListAdapter extends ArrayAdapter<ExerciseData> {
 
             @Override
             public void afterTextChanged(Editable s) {
-                item.setReps(s.toString());
+                if(!s.toString().isEmpty()) {
+                    item.setReps(s.toString());
+                } else {
+                    item.setReps("");
+                }
 
             }
         });
@@ -76,7 +81,11 @@ public class WorkoutListAdapter extends ArrayAdapter<ExerciseData> {
 
             @Override
             public void afterTextChanged(Editable s) {
-                item.setWeight(s.toString());
+                if(!s.toString().isEmpty()) {
+                    item.setWeight(s.toString());
+                } else {
+                    item.setWeight("");
+                }
 
             }
         });
@@ -96,7 +105,8 @@ public class WorkoutListAdapter extends ArrayAdapter<ExerciseData> {
 
     public void addData(String date) {
         for(ExerciseData data : workoutItems) {
-          //  exerciseDatabase.add()
+            exerciseDatabase.addData(date, Integer.valueOf(data.getReps()),
+                    Double.valueOf(data.getWeight()), Integer.valueOf(data.getPosition()));
 
         }
     }
