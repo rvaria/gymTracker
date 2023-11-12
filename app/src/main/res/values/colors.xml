@@ -10,4 +10,5 @@
     <color name="gray">#D3D3D3</color>
     <color name="toolbar">#1A1463</color>
     <color name="buttonCol">#4B0082</color>
+    <color name="bgCol">#001F3F</color>
 </resources>
