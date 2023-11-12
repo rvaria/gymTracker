@@ -36,9 +36,10 @@
             android:layout_weight="1"
             android:backgroundTint="@color/gray"
             android:hint="Enter reps"
+            android:inputType="number"
+            android:textColor="@color/black"
             android:textColorHint="@color/gray"
-            android:textSize="12sp"
-            android:textColor="@color/black"/>
+            android:textSize="12sp" />
 
         <View
             android:layout_width="8dp"
@@ -51,8 +52,7 @@
             android:layout_toRightOf="@id/reps"
             android:layout_weight="0.5"
             android:text="Weight: "
-            android:textColor="@color/black"
-            />
+            android:textColor="@color/black" />
 
 
         <EditText
@@ -62,9 +62,10 @@
             android:layout_weight="1"
             android:backgroundTint="@color/gray"
             android:hint="Enter weight"
+            android:inputType="numberDecimal"
+            android:textColor="@color/black"
             android:textColorHint="@color/gray"
-            android:textSize="12sp"
-            android:textColor="@color/black"/>
+            android:textSize="12sp" />
 
     </LinearLayout>
 

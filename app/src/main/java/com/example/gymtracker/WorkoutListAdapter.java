@@ -20,6 +20,7 @@ public class WorkoutListAdapter extends ArrayAdapter<ExerciseData> {
     private TextView exercise;
     private TextView reps;
     private TextView weight;
+    private ExerciseDatabase exerciseDatabase;
 
     public WorkoutListAdapter(Activity activity, List<ExerciseData> workoutItems) {
         super(activity, R.layout.exercise_item, workoutItems);
@@ -28,6 +29,7 @@ public class WorkoutListAdapter extends ArrayAdapter<ExerciseData> {
     }
 
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+
         LayoutInflater inflater = LayoutInflater.from(activity);
         convertView = inflater.inflate(R.layout.workout_item, parent, false);
 
@@ -41,6 +43,7 @@ public class WorkoutListAdapter extends ArrayAdapter<ExerciseData> {
         exercise.setText(item.getExerciseName());
 
         repEntry.setText(item.getReps());
+        weightEntry.setText(item.getWeight());
 
         repEntry.addTextChangedListener(new TextWatcher() {
             @Override
@@ -73,13 +76,29 @@ public class WorkoutListAdapter extends ArrayAdapter<ExerciseData> {
 
             @Override
             public void afterTextChanged(Editable s) {
-                item.setReps(s.toString());
+                item.setWeight(s.toString());
 
             }
         });
 
-
         return convertView;
+
+    }
+
+    public boolean checkFilled() {
+        for(ExerciseData checkData : workoutItems) {
+            if(checkData.getReps() == "" || checkData.getWeight() == "") {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void addData(String date) {
+        for(ExerciseData data : workoutItems) {
+          //  exerciseDatabase.add()
+
+        }
     }
 }
 

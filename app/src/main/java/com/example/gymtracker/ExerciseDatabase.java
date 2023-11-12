@@ -19,6 +19,7 @@ public class ExerciseDatabase extends SQLiteOpenHelper {
     private static final String routineID = "routine_id";
     private static final String routineIDKey = "routine_id_key";
     private static final String exerciseID = "exercise_id";
+    private static final String exerciseIDKey = "exercise_id_key";
     private static final String dataID = "data_id";
     private static final String routineCol = "routine_name";
     private static final String nameCol = "exercise_name";
@@ -47,12 +48,14 @@ public class ExerciseDatabase extends SQLiteOpenHelper {
                 + dataID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + dateCol + " TEXT, "
                 + repsCol + " INTEGER, "
-                + weightCol + " REAL)";
+                + weightCol + " REAL)"
+                + exerciseIDKey + "INTEGER, FOREIGN KEY (" + exerciseIDKey + ") REFERENCES "
+                + exerciseTable + "(" + exerciseID + "))";
 
         db.execSQL("PRAGMA foreign_keys=ON");
         db.execSQL(routine);
         db.execSQL(exercise);
-       // db.execSQL(data);
+        db.execSQL(data);
 
     }
 
@@ -85,13 +88,14 @@ public class ExerciseDatabase extends SQLiteOpenHelper {
 
     }
 
-    public boolean addData(String date, int reps, double weight) {
+    public boolean addData(String date, int reps, double weight, long keyID) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put(dateCol, date);
         values.put(repsCol, reps);
         values.put(weightCol, weight);
+        values.put(exerciseIDKey, keyID);
 
         long insert = db.insert(dataTable, null, values);
 

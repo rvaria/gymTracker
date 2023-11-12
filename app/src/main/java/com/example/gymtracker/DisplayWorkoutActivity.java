@@ -9,6 +9,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -76,7 +77,11 @@ public class DisplayWorkoutActivity extends AppCompatActivity {
         addData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(!workoutListAdapter.checkFilled()) {
+                    Toast.makeText(getApplicationContext(), "Please fill in all the values!", Toast.LENGTH_SHORT).show();
+                } else {
+                    workoutListAdapter.addData(displayDate.getText().toString());
+                }
             }
         });
     }
