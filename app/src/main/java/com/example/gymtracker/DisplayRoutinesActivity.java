@@ -28,7 +28,7 @@ public class DisplayRoutinesActivity extends AppCompatActivity {
 
         routineList = findViewById(R.id.routines);
         routineList.setClickable(true);
-        routineList.setAdapter(new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_1, routineItems));
+        routineList.setAdapter(new ArrayAdapter(getApplicationContext(), R.layout.routine_item, R.id.routine_content, routineItems));
 
 
         routineList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

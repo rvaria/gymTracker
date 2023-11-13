@@ -4,13 +4,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/black"
     android:orientation="horizontal"
     >
 
     <CheckBox
         android:id="@+id/checkBox"
-        android:buttonTint="@color/black"
+        android:buttonTint="@color/white"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         />
@@ -19,6 +19,6 @@
         android:id="@+id/exerciseName"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:textColor="@color/black" />
+        android:textColor="@color/white" />
 
 </LinearLayout>

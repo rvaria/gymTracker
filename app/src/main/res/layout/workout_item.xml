@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="16dp"
-    android:background="@color/white"
+    android:background="@color/black"
     android:orientation="vertical"
     android:padding="15dp">
 
@@ -12,7 +12,7 @@
         android:id="@+id/exerciseName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -26,7 +26,7 @@
             android:layout_height="40dp"
             android:layout_weight="0.4"
             android:text="Reps: "
-            android:textColor="@color/black" />
+            android:textColor="@color/white" />
 
 
         <EditText
@@ -52,7 +52,7 @@
             android:layout_toRightOf="@id/reps"
             android:layout_weight="0.5"
             android:text="Weight: "
-            android:textColor="@color/black" />
+            android:textColor="@color/white" />
 
 
         <EditText

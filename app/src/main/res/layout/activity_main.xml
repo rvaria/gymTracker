@@ -4,14 +4,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bgCol"
+    android:background="@color/black"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/mainToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/toolbar"
+        android:background="@color/dark_gray"
         android:minHeight="?attr/actionBarSize" />
 
     <View
@@ -24,7 +24,7 @@
         android:layout_height="70sp"
         android:layout_gravity="center"
         android:background="@drawable/round_shape"
-        android:backgroundTint="@color/buttonCol"
+        android:backgroundTint="@color/dark_gray"
         android:text="Create workout routine"
         android:textSize="20sp" />
 
@@ -38,7 +38,7 @@
         android:layout_height="70sp"
         android:layout_gravity="center"
         android:background="@drawable/round_shape"
-        android:backgroundTint="@color/buttonCol"
+        android:backgroundTint="@color/dark_gray"
         android:text="View workout routines"
         android:textSize="20sp" />
 
@@ -52,7 +52,7 @@
         android:layout_height="70sp"
         android:layout_gravity="center"
         android:background="@drawable/round_shape"
-        android:backgroundTint="@color/buttonCol"
+        android:backgroundTint="@color/dark_gray"
         android:text="View progress"
         android:textSize="20sp" />
 
