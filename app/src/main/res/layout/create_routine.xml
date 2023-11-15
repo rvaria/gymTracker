@@ -12,7 +12,7 @@
         android:id="@+id/routineToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/dark_gray"
+        android:background="@color/toolbar"
         android:minHeight="?attr/actionBarSize"
         />
 
@@ -43,7 +43,7 @@
         android:id="@+id/addExercise"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/buttonCol"
         android:padding="10dp"
         android:text="+ Add new exercise"
         android:textColor="@color/white"

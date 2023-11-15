@@ -17,7 +17,7 @@
         android:id="@+id/popupToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/dark_gray"
+        android:background="@color/toolbar"
         android:minHeight="?attr/actionBarSize"
         />
 
@@ -38,6 +38,7 @@
         android:id="@+id/contButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/buttonCol"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:text="Add (0)"

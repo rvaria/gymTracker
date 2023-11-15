@@ -11,7 +11,7 @@
         android:id="@+id/mainToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/dark_gray"
+        android:background="@color/toolbar"
         android:minHeight="?attr/actionBarSize" />
 
     <View
@@ -24,7 +24,7 @@
         android:layout_height="70sp"
         android:layout_gravity="center"
         android:background="@drawable/round_shape"
-        android:backgroundTint="@color/dark_gray"
+        android:backgroundTint="@color/buttonCol"
         android:text="Create workout routine"
         android:textSize="20sp" />
 
@@ -38,7 +38,7 @@
         android:layout_height="70sp"
         android:layout_gravity="center"
         android:background="@drawable/round_shape"
-        android:backgroundTint="@color/dark_gray"
+        android:backgroundTint="@color/buttonCol"
         android:text="View workout routines"
         android:textSize="20sp" />
 
@@ -52,7 +52,7 @@
         android:layout_height="70sp"
         android:layout_gravity="center"
         android:background="@drawable/round_shape"
-        android:backgroundTint="@color/dark_gray"
+        android:backgroundTint="@color/buttonCol"
         android:text="View progress"
         android:textSize="20sp" />
 

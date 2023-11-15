@@ -37,7 +37,7 @@
             android:backgroundTint="@color/gray"
             android:hint="Enter reps"
             android:inputType="number"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textColorHint="@color/gray"
             android:textSize="12sp" />
 
