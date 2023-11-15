@@ -48,8 +48,8 @@ public class ExerciseDatabase extends SQLiteOpenHelper {
                 + dataID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + dateCol + " TEXT, "
                 + repsCol + " INTEGER, "
-                + weightCol + " REAL)"
-                + exerciseIDKey + "INTEGER, FOREIGN KEY (" + exerciseIDKey + ") REFERENCES "
+                + weightCol + " REAL, "
+                + exerciseIDKey + " INTEGER, FOREIGN KEY (" + exerciseIDKey + ") REFERENCES "
                 + exerciseTable + "(" + exerciseID + "))";
 
         db.execSQL("PRAGMA foreign_keys=ON");
