@@ -27,6 +27,7 @@
         <activity android:name=".DisplayWorkoutActivity"></activity>
         <activity android:name=".DisplayRoutinesActivity"></activity>
         <activity android:name=".TrackProgressActivity"></activity>
+        <activity android:name=".ExerciseProgressActivity"></activity>
     </application>
 
 </manifest>

@@ -108,12 +108,12 @@ public class ExerciseDatabase extends SQLiteOpenHelper {
 
     public List<String> routinesList() {
 
-        String query = "SELECT " + routineCol + " FROM " + routineTable;
+        String routineQuery = "SELECT " + routineCol + " FROM " + routineTable;
 
         ArrayList<String> routines = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(query, null);
+        Cursor cursor = db.rawQuery(routineQuery, null);
 
         if(cursor.moveToFirst()) {
             do {
@@ -126,7 +126,7 @@ public class ExerciseDatabase extends SQLiteOpenHelper {
 
     public List<String> exercisesList(String routine) {
 
-        String queryString = "SELECT " + nameCol + " FROM " + exerciseTable
+        String exerciseQuery = "SELECT " + nameCol + " FROM " + exerciseTable
                 + " INNER JOIN " + routineTable + " ON "
                 + routineTable + "." + routineID + "=" + exerciseTable + "." + routineIDKey
                 + " WHERE " + routineTable + "." + routineCol + " = '" + routine + "'";
@@ -135,7 +135,7 @@ public class ExerciseDatabase extends SQLiteOpenHelper {
         ArrayList<String> exercises = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(queryString, null);
+        Cursor cursor = db.rawQuery(exerciseQuery, null);
 
         if(cursor.moveToFirst()) {
             do {
@@ -147,6 +147,28 @@ public class ExerciseDatabase extends SQLiteOpenHelper {
         cursor.close();
         return exercises;
 
+    }
+
+    public int getNumber(String exerciseName, String routineName) {
+
+        String idQuery = "SELECT " + exerciseID + " FROM " + exerciseTable
+            + " WHERE " + nameCol + " = " +  exerciseName + " AND " + routineID
+            + " = (SELECT " + routineID + " FROM " + routineTable + " WHERE " +
+                routineCol + " = " + routineName;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(idQuery, null);
+
+        int id = 0;
+
+        return id;
+    }
+
+    public List<String> getData(String exercise) {
+
+        List<String> routineData = new ArrayList<String>();
+
+        return routineData;
     }
 
 }

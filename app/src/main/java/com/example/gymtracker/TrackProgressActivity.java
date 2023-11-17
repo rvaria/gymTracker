@@ -1,14 +1,13 @@
 package com.example.gymtracker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.ArrayList;
 
 public class TrackProgressActivity extends AppCompatActivity {
@@ -50,5 +49,15 @@ public class TrackProgressActivity extends AppCompatActivity {
             }
         });
 
+        exercises.setClickable(true);
+        exercises.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String exercise = exercises.getItemAtPosition(position).toString();
+                Intent exerciseProgress = new Intent(getApplicationContext(), ExerciseProgressActivity.class);
+                exerciseProgress.putExtra("exercise", exercise);
+                startActivity(exerciseProgress);
+            }
+        });
     }
 }
