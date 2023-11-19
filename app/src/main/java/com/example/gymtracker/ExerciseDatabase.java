@@ -14,15 +14,17 @@ public class ExerciseDatabase extends SQLiteOpenHelper {
 
     private static final String database = "exercise_database";
     private static final String routineTable = "routine";
-    private static final String exerciseTable = "exercise";
-    private static final String dataTable = "user_data";
     private static final String routineID = "routine_id";
-    private static final String routineIDKey = "routine_id_key";
+    private static final String routineName = "routine_name";
+
+    private static final String exerciseTable = "exercise";
     private static final String exerciseID = "exercise_id";
+    private static final String exerciseName = "exercise_name";
     private static final String exerciseIDKey = "exercise_id_key";
+    private static final String routineIDKey = "routine_id_key";
+
+    private static final String dataTable = "user_data";
     private static final String dataID = "data_id";
-    private static final String routineCol = "routine_name";
-    private static final String nameCol = "exercise_name";
     private static final String dateCol = "date";
     private static final String repsCol = "reps";
     private static final String weightCol = "weight";
@@ -36,11 +38,11 @@ public class ExerciseDatabase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String routine = "CREATE TABLE " + routineTable + "("
                 + routineID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + routineCol + " TEXT)";
+                + routineName + " TEXT)";
 
         String exercise = "CREATE TABLE " + exerciseTable + "("
                 + exerciseID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + nameCol + " TEXT, "
+                + exerciseName + " TEXT, "
                 + routineIDKey + " INTEGER, FOREIGN KEY (" + routineIDKey + ") REFERENCES "
                 + routineTable + "(" + routineID + "))";
 
@@ -68,7 +70,7 @@ public class ExerciseDatabase extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(routineCol, routine);
+        values.put(routineName, routine);
 
         long id = db.insert(routineTable, null, values);
         return id;
@@ -80,7 +82,7 @@ public class ExerciseDatabase extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         for(String exercise : exercises) {
-            values.put(nameCol, exercise);
+            values.put(exerciseName, exercise);
             values.put(routineIDKey, keyID);
             db.insert(exerciseTable, null, values);
 
@@ -108,7 +110,7 @@ public class ExerciseDatabase extends SQLiteOpenHelper {
 
     public List<String> routinesList() {
 
-        String routineQuery = "SELECT " + routineCol + " FROM " + routineTable;
+        String routineQuery = "SELECT " + routineName + " FROM " + routineTable;
 
         ArrayList<String> routines = new ArrayList<>();
 
@@ -126,11 +128,10 @@ public class ExerciseDatabase extends SQLiteOpenHelper {
 
     public List<String> exercisesList(String routine) {
 
-        String exerciseQuery = "SELECT " + nameCol + " FROM " + exerciseTable
+        String exerciseQuery = "SELECT " + exerciseName + " FROM " + exerciseTable
                 + " INNER JOIN " + routineTable + " ON "
                 + routineTable + "." + routineID + "=" + exerciseTable + "." + routineIDKey
-                + " WHERE " + routineTable + "." + routineCol + " = '" + routine + "'";
-
+                + " WHERE " + routineTable + "." + routineName + " = '" + routine + "'";
 
         ArrayList<String> exercises = new ArrayList<>();
 
@@ -149,24 +150,49 @@ public class ExerciseDatabase extends SQLiteOpenHelper {
 
     }
 
-    public int getNumber(String exerciseName, String routineName) {
+    public int getNumber(String exercise, String routine) {
 
         String idQuery = "SELECT " + exerciseID + " FROM " + exerciseTable
-            + " WHERE " + nameCol + " = " +  exerciseName + " AND " + routineID
-            + " = (SELECT " + routineID + " FROM " + routineTable + " WHERE " +
-                routineCol + " = " + routineName;
+                + " INNER JOIN " + routineTable + " ON "
+                + routineTable + "." + routineID + "=" + exerciseTable + "." + routineIDKey
+                + " WHERE " + exerciseTable + "." + exerciseName + " = '" + exercise
+                + "' AND " + routineTable + "." + routineName + " = '" + routine + "'";
 
+        int id = 0;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(idQuery, null);
 
-        int id = 0;
+        if(cursor.moveToFirst()) {
+            id = cursor.getInt(0);
+        }
+
+        cursor.close();
 
         return id;
     }
 
     public List<String> getData(String exercise) {
 
+        String dataQuery = "SELECT " + dateCol + ", " + repsCol + ", " + weightCol
+                + " FROM " + dataTable + " INNER JOIN " + exerciseTable
+                + " ON " + exerciseTable + "." + exerciseID + "=" + dataTable + "." + exerciseIDKey
+                + " WHERE " + exerciseTable + "." + exerciseName + "='" + exercise + "'";
+
         List<String> routineData = new ArrayList<String>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(dataQuery, null);
+
+        if(cursor.moveToFirst()) {
+            do {
+                routineData.add(cursor.getString(0));
+                routineData.add(cursor.getString(1));
+                routineData.add(cursor.getString(2));
+
+            } while(cursor.moveToNext());
+        }
+
+        cursor.close();
 
         return routineData;
     }

@@ -32,7 +32,6 @@ public class DisplayWorkoutActivity extends AppCompatActivity {
     private int cDay;
     private int cMonth;
     private int cYear;
-    private int position;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -81,7 +80,7 @@ public class DisplayWorkoutActivity extends AppCompatActivity {
                 if(!workoutListAdapter.checkFilled()) {
                     Toast.makeText(getApplicationContext(), "Please fill in all the values!", Toast.LENGTH_SHORT).show();
                 } else {
-                    workoutListAdapter.addData(displayDate.getText().toString(), position);
+                    workoutListAdapter.addData(displayDate.getText().toString(), routineName);
                 }
             }
         });
