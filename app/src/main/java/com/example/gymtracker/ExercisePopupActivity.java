@@ -3,12 +3,17 @@ package com.example.gymtracker;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +28,12 @@ public class ExercisePopupActivity extends AppCompatActivity {
     private ExerciseListAdapter listAdapter;
     private SearchView searchExercises;
     private Button contButton;
+    private Spinner muscleFilter;
     private ArrayList<String> chosenExercises;
     private String routineName;
     private ExerciseDatabase exerciseDatabase;
+    private String[] muscleGroups;
+    private ArrayList<String> selectedMuscle;
     private long id;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +47,10 @@ public class ExercisePopupActivity extends AppCompatActivity {
         parseExercises = new ParseExercises(this);
         exerciseList = findViewById(R.id.exerciseList);
         contButton = findViewById(R.id.contButton);
+        muscleFilter = findViewById(R.id.muscleFilter);
         chosenExercises = new ArrayList<>();
+
+        muscleGroups = new String[]{"Legs", "Biceps", "Back", "Chest", "Triceps", "Shoulder", "Forearms"};
 
         exerciseDatabase = new ExerciseDatabase(this);
 
@@ -71,16 +82,35 @@ public class ExercisePopupActivity extends AppCompatActivity {
             }
         });
 
+        ArrayAdapter<String> dropDown = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, muscleGroups);
+        dropDown.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        muscleFilter.setAdapter(dropDown);
+        muscleFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String muscle = muscleFilter.getSelectedItem().toString();
+                selectedMuscle = new ArrayList<>();
+                selectedMuscle.add(muscle);
+                parseExercises.filterMuscle(json, selectedMuscle);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         contButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(chosenExercises.size() != 0) {
+                if (chosenExercises.size() != 0) {
 
                     try {
                         id = exerciseDatabase.addRoutine(routineName);
                         exerciseDatabase.addExercises(chosenExercises, id);
 
-                    } catch(Exception e) {
+                    } catch (Exception e) {
                         System.out.println("Not working");
                     }
 

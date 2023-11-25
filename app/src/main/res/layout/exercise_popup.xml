@@ -28,11 +28,19 @@
         android:gravity="center_vertical"
          />
 
+        <Spinner
+            android:id="@+id/muscleFilter"
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:layout_below="@id/popupToolbar"
+            />
+
+
         <ListView
             android:id="@+id/exerciseList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/popupToolbar" />
+            android:layout_below="@id/muscleFilter" />
 
     <Button
         android:id="@+id/contButton"

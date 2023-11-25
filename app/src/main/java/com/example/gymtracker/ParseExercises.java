@@ -6,20 +6,25 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ParseExercises extends AppCompatActivity {
 
     private Activity context;
     private String name;
-    private String type;
-    private String muscle;
     private List<String> exerciseNames;
+    private List<String> muscleGroup;
+    private List<String> muscleExercises;
 
     public ParseExercises(Activity context) {
         this.context = context;
@@ -61,6 +66,32 @@ public class ParseExercises extends AppCompatActivity {
         }
 
        return exerciseNames;
+
+    }
+
+    public List filterMuscle(String fileContents, List<String> muscles) {
+
+        JsonElement jsonElement = JsonParser.parseString(fileContents);
+        JsonArray jsonArray = jsonElement.getAsJsonArray();
+        muscleGroup = new ArrayList<>();
+        muscleExercises = new ArrayList<>();
+
+        for(JsonElement exercise : jsonArray) {
+            JsonObject exerciseObject = exercise.getAsJsonObject();
+            String type = exerciseObject.get("category").toString();
+            if(type.equals("\"strength\"")) {
+                String muscle = exerciseObject.get("primaryMuscles").toString();
+                muscle = muscle.replaceAll("[^a-z]", "").trim();
+                for(String muscleName : muscles) {
+                    if(muscle.equalsIgnoreCase(muscleName)) {
+                        name = exerciseObject.get("name").toString();
+                        muscleExercises.add(name.replaceAll("\"", ""));
+                    }
+                }
+            }
+        }
+
+        return muscleExercises;
 
     }
 
