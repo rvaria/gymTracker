@@ -81,7 +81,7 @@ public class ParseExercises extends AppCompatActivity {
             String type = exerciseObject.get("category").toString();
             if(type.equals("\"strength\"")) {
                 String muscle = exerciseObject.get("primaryMuscles").toString();
-                muscle = muscle.replaceAll("[^a-z]", "").trim();
+                muscle = muscle.replaceAll("[^a-z]", "");
                 for(String muscleName : muscles) {
                     if(muscle.equalsIgnoreCase(muscleName)) {
                         name = exerciseObject.get("name").toString();

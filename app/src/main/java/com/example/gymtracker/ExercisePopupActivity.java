@@ -16,6 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -34,6 +35,7 @@ public class ExercisePopupActivity extends AppCompatActivity {
     private ExerciseDatabase exerciseDatabase;
     private String[] muscleGroups;
     private ArrayList<String> selectedMuscle;
+    private ArrayList<String> muscleFilterList;
     private long id;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,7 @@ public class ExercisePopupActivity extends AppCompatActivity {
         muscleFilter = findViewById(R.id.muscleFilter);
         chosenExercises = new ArrayList<>();
 
-        muscleGroups = new String[]{"Legs", "Biceps", "Back", "Chest", "Triceps", "Shoulder", "Forearms"};
+        muscleGroups = new String[]{"All", "Abdominals", "Legs", "Biceps", "Back", "Chest", "Triceps", "Shoulders", "Forearms"};
 
         exerciseDatabase = new ExerciseDatabase(this);
 
@@ -64,8 +66,6 @@ public class ExercisePopupActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        listAdapter = new ExerciseListAdapter(this, exercises);
-        exerciseList.setAdapter(listAdapter);
         searchExercises = findViewById((R.id.searchExercise));
 
         searchExercises.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -91,8 +91,23 @@ public class ExercisePopupActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String muscle = muscleFilter.getSelectedItem().toString();
                 selectedMuscle = new ArrayList<>();
-                selectedMuscle.add(muscle);
-                parseExercises.filterMuscle(json, selectedMuscle);
+
+                if (muscle.equals("Abdominals") || muscle.equals("Biceps") || muscle.equals("Chest")
+                        || muscle.equals("Shoulders") || muscle.equals("Triceps") || muscle.equals("Forearms")) {
+                    selectedMuscle.add(muscle);
+                    muscleFilterList = new ArrayList<>(parseExercises.filterMuscle(json, selectedMuscle));
+                    setList(muscleFilterList);
+                } else if (muscle.equals("Legs")) {
+                    selectedMuscle.addAll(Arrays.asList("Quadriceps", "Glutes", "Adductors", "Abductors", "Hamstrings", "Calves"));
+                    muscleFilterList = new ArrayList<>(parseExercises.filterMuscle(json, selectedMuscle));
+                    setList(muscleFilterList);
+                } else if (muscle.equals("Back")) {
+                    selectedMuscle.addAll(Arrays.asList("Traps", "Lats", "Middle Back", "Lower Back"));
+                    muscleFilterList = new ArrayList<>(parseExercises.filterMuscle(json, selectedMuscle));
+                    setList(muscleFilterList);
+                } else {
+                    setList(exercises);
+                }
             }
 
             @Override
@@ -122,6 +137,11 @@ public class ExercisePopupActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void setList(List<String> exerciseItems) {
+        listAdapter = new ExerciseListAdapter(this, exerciseItems);
+        exerciseList.setAdapter(listAdapter);
     }
 
     public void setCount(int count) {
