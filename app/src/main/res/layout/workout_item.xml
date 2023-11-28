@@ -63,7 +63,7 @@
             android:backgroundTint="@color/gray"
             android:hint="Enter weight"
             android:inputType="numberDecimal"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textColorHint="@color/gray"
             android:textSize="12sp" />
 

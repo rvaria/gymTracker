@@ -171,23 +171,22 @@ public class ExerciseDatabase extends SQLiteOpenHelper {
         return id;
     }
 
-    public List<String> getData(String exercise) {
+    public List<WorkoutEntry> getData(String exercise) {
 
         String dataQuery = "SELECT " + dateCol + ", " + repsCol + ", " + weightCol
                 + " FROM " + dataTable + " INNER JOIN " + exerciseTable
                 + " ON " + exerciseTable + "." + exerciseID + "=" + dataTable + "." + exerciseIDKey
                 + " WHERE " + exerciseTable + "." + exerciseName + "='" + exercise + "'";
 
-        List<String> routineData = new ArrayList<String>();
+        List<WorkoutEntry> routineData = new ArrayList<>();
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(dataQuery, null);
 
         if(cursor.moveToFirst()) {
             do {
-                routineData.add(cursor.getString(0));
-                routineData.add(cursor.getString(1));
-                routineData.add(cursor.getString(2));
+                routineData.add(new WorkoutEntry(cursor.getString(0),
+                        (cursor.getString(1)), (cursor.getString(2))));
 
             } while(cursor.moveToNext());
         }

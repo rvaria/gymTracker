@@ -9,7 +9,7 @@ import java.util.List;
 public class ExerciseProgressActivity extends AppCompatActivity {
 
     private ExerciseDatabase exerciseDatabase;
-    private List<String> exerciseData;
+    private List<WorkoutEntry> exerciseData;
     private String routine;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +23,7 @@ public class ExerciseProgressActivity extends AppCompatActivity {
         routine = getRoutine.getExtras().getString("exercise");
 
         exerciseData = new ArrayList<>(exerciseDatabase.getData(routine));
-        System.out.println("STUFF " + exerciseData);
+
 
     }
 }

@@ -97,7 +97,6 @@ public class ExerciseListAdapter extends ArrayAdapter<String> implements Filtera
                 exerciseItems.clear();
                 exerciseItems.addAll(filteredItems);
                 notifyDataSetChanged();
-                // System.out.println("ITEMS IN THE LIST - " + exerciseItems);
 
             }
         };
