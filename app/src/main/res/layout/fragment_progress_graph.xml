@@ -7,9 +7,9 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/graphName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="GRAPH PROGRESS"
-        android:textSize="50sp" />
+        android:textSize="20sp" />
 
 </LinearLayout>

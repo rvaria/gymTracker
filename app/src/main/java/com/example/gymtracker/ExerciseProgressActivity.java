@@ -2,7 +2,10 @@ package com.example.gymtracker;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
@@ -17,8 +20,7 @@ public class ExerciseProgressActivity extends AppCompatActivity {
     private ViewPager2 viewPager;
     private ViewPageAdapter viewPageAdapter;
     private ExerciseDatabase exerciseDatabase;
-    private List<WorkoutEntry> exerciseData;
-    private String routine;
+    private String exercise;
 
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -28,21 +30,24 @@ public class ExerciseProgressActivity extends AppCompatActivity {
         chooseTab = findViewById(R.id.progressTabs);
         viewPager = findViewById(R.id.viewPager);
 
+        Intent getRoutine = getIntent();
+        exercise = getRoutine.getExtras().getString("exercise");
+
         exerciseDatabase = new ExerciseDatabase(this);
         viewPageAdapter = new ViewPageAdapter(this);
+        viewPageAdapter.passData(exercise);
         viewPager.setAdapter(viewPageAdapter);
 
         new TabLayoutMediator(chooseTab, viewPager, (tab, position) -> {
-            switch(position) {
+            switch (position) {
                 case 0:
                     tab.setText("TABLE");
+                    break;
                 case 1:
                     tab.setText("GRAPH");
+                    break;
             }
         }).attach();
-
-        Intent getRoutine = getIntent();
-        routine = getRoutine.getExtras().getString("exercise");
 
         chooseTab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -60,8 +65,5 @@ public class ExerciseProgressActivity extends AppCompatActivity {
 
             }
         });
-
-        exerciseData = new ArrayList<>(exerciseDatabase.getData(routine));
-
     }
 }
