@@ -11,7 +11,13 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class ExerciseProgressActivity extends AppCompatActivity {
@@ -65,5 +71,29 @@ public class ExerciseProgressActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void sortDate(List<WorkoutEntry> exerciseData, String order) {
+
+        DateFormat date = new SimpleDateFormat("dd/mm/yyyy");
+        Collections.sort(exerciseData, new Comparator<WorkoutEntry>() {
+            @Override
+            public int compare(WorkoutEntry o1, WorkoutEntry o2) {
+                try {
+                    Date date1 = date.parse(o1.getExerciseDate());
+                    Date date2 = date.parse(o2.getExerciseDate());
+                    if (order == "ascending") {
+                        return date1.compareTo(date2);
+                    } else {
+                        return date2.compareTo(date1);
+                    }
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    return 0;
+                }
+            }
+        });
+
     }
 }

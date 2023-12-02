@@ -15,6 +15,7 @@ public class ProgressTable extends Fragment {
     private TextView tableName;
     private List<WorkoutEntry> exerciseData;
     private ExerciseDatabase exerciseDatabase;
+    private ExerciseProgressActivity exerciseProgressActivity;
     private ListView tableList;
     private TableListAdapter tableListAdapter;
 
@@ -32,6 +33,9 @@ public class ProgressTable extends Fragment {
 
         exerciseDatabase = new ExerciseDatabase(getContext());
         exerciseData = new ArrayList<>(exerciseDatabase.getData(name));
+
+        exerciseProgressActivity = new ExerciseProgressActivity();
+        exerciseProgressActivity.sortDate(exerciseData, "descending");
 
         tableList = view.findViewById(R.id.tableList);
         tableListAdapter = new TableListAdapter(getActivity(), exerciseData);
