@@ -64,6 +64,17 @@ public class ExerciseDatabase extends SQLiteOpenHelper {
 
     }
 
+    public void deleteRoutine(String name) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String delQuery = "DELETE FROM " + routineTable + " WHERE "
+                + routineCol + "= '" + name + "'";
+
+        db.execSQL(delQuery);
+        db.close();
+
+    }
+
     public long addRoutine(String routine) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -130,7 +141,6 @@ public class ExerciseDatabase extends SQLiteOpenHelper {
                 + " INNER JOIN " + routineTable + " ON "
                 + routineTable + "." + routineID + "=" + exerciseTable + "." + routineIDKey
                 + " WHERE " + routineTable + "." + routineCol + " = '" + routine + "'";
-
 
         ArrayList<String> exercises = new ArrayList<>();
 

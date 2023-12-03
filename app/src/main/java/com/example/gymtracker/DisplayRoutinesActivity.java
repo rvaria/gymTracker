@@ -15,6 +15,7 @@ public class DisplayRoutinesActivity extends AppCompatActivity {
     private ListView routineList;
     private List<String> routineItems;
     private ExerciseDatabase exerciseDatabase;
+    private RoutineListAdapter routineListAdapter;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -24,11 +25,10 @@ public class DisplayRoutinesActivity extends AppCompatActivity {
         exerciseDatabase = new ExerciseDatabase(this);
         routineItems = new ArrayList<>(exerciseDatabase.routinesList());
 
-        System.out.println("ROUTINE ITEMS: " + routineItems);
-
         routineList = findViewById(R.id.routines);
         routineList.setClickable(true);
-        routineList.setAdapter(new ArrayAdapter(getApplicationContext(), R.layout.routine_item, R.id.routine_content, routineItems));
+        routineListAdapter = new RoutineListAdapter(this, routineItems);
+        routineList.setAdapter(routineListAdapter);
 
 
         routineList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -40,7 +40,6 @@ public class DisplayRoutinesActivity extends AppCompatActivity {
                 startActivity(workout);
 
             }
-
         });
     }
 }
