@@ -82,10 +82,10 @@ public class ExerciseProgressActivity extends AppCompatActivity {
                 try {
                     Date date1 = date.parse(o1.getExerciseDate());
                     Date date2 = date.parse(o2.getExerciseDate());
-                    if (order == "ascending") {
-                        return date1.compareTo(date2);
-                    } else {
+                    if (order == "Newest") {
                         return date2.compareTo(date1);
+                    } else {
+                        return date1.compareTo(date2);
                     }
 
                 } catch (ParseException e) {

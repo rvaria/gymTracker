@@ -8,15 +8,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
@@ -58,7 +63,7 @@ public class ProgressGraph extends Fragment {
         exerciseData = new ArrayList<>(exerciseDatabase.getData(name));
 
         exerciseProgressActivity = new ExerciseProgressActivity();
-        exerciseProgressActivity.sortDate(exerciseData, "ascending");
+        exerciseProgressActivity.sortDate(exerciseData, "Oldest");
 
         chart = view.findViewById(R.id.progressChart);
 
@@ -72,33 +77,31 @@ public class ProgressGraph extends Fragment {
 
         for(int i = 0; i < exerciseData.size(); i++) {
             WorkoutEntry repEntry = exerciseData.get(i);
-            reps.add(new Entry(i, Float.parseFloat(repEntry.getExerciseReps())));
-            weight.add(new Entry(i, Float.parseFloat(repEntry.getExerciseWeight())));
+            reps.add(new BarEntry(i, Float.parseFloat(repEntry.getExerciseReps())));
+            weight.add(new BarEntry(i, Float.parseFloat(repEntry.getExerciseWeight())));
         }
 
         repAxisSet = new LineDataSet(reps, "Reps");
         weightAxisSet = new LineDataSet(weight, "Weight");
         weightAxisSet.setColor(Color.RED);
+        repAxisSet.setColor(Color.BLUE);
         LineData chartData = new LineData(repAxisSet, weightAxisSet);
 
         XAxis xAxis = chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setLabelRotationAngle(60);
+        xAxis.setGranularity(1f);
         chart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(date));
         YAxis repAxis = chart.getAxisLeft();
         xAxis.setTextColor(Color.WHITE);
-        YAxis weightAxis = chart.getAxisRight();
         xAxis.setDrawAxisLine(true);
         repAxis.setDrawAxisLine(true);
-        weightAxis.setDrawAxisLine(true);
 
         repAxis.setTextColor(Color.WHITE);
-//        weightAxis.setTextColor(Color.WHITE);
 
         chart.setDoubleTapToZoomEnabled(false);
-        chart.getAxisLeft().setDrawGridLines(false);
-        chart.getAxisRight().setDrawGridLines(false);
         chart.getXAxis().setDrawGridLines(false);
+        chart.getAxisRight().setDrawGridLines(false);
 
         chart.setData(chartData);
         chart.invalidate();
