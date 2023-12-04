@@ -6,6 +6,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -40,13 +43,12 @@ public class ProgressGraph extends Fragment {
     private List<WorkoutEntry> exerciseData;
     private ExerciseDatabase exerciseDatabase;
     private ExerciseProgressActivity exerciseProgressActivity;
-    private WorkoutEntry workoutEntry;
+    private Spinner weightChoice;
     private LineChart chart;
     private List<String> date;
+    private List<String> weight;
     private List<Entry> reps;
-    private List<Entry> weight;
     private LineDataSet repAxisSet;
-    private LineDataSet weightAxisSet;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,7 +59,9 @@ public class ProgressGraph extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_progress_graph, container, false);
 
+        weightChoice = view.findViewById(R.id.weightChoice);
         graphName = view.findViewById(R.id.graphName);
+        chart = view.findViewById(R.id.progressChart);
         graphName.setText(name);
         exerciseDatabase = new ExerciseDatabase(getContext());
         exerciseData = new ArrayList<>(exerciseDatabase.getData(name));
@@ -65,27 +69,42 @@ public class ProgressGraph extends Fragment {
         exerciseProgressActivity = new ExerciseProgressActivity();
         exerciseProgressActivity.sortDate(exerciseData, "Oldest");
 
-        chart = view.findViewById(R.id.progressChart);
-
         date = new ArrayList<>();
         reps = new ArrayList<>();
         weight = new ArrayList<>();
 
         for(WorkoutEntry workoutEntry : exerciseData) {
             date.add(workoutEntry.getExerciseDate());
+            if(!weight.contains(workoutEntry.getExerciseWeight())) {
+                weight.add(workoutEntry.getExerciseWeight());
+            }
         }
 
         for(int i = 0; i < exerciseData.size(); i++) {
             WorkoutEntry repEntry = exerciseData.get(i);
             reps.add(new BarEntry(i, Float.parseFloat(repEntry.getExerciseReps())));
-            weight.add(new BarEntry(i, Float.parseFloat(repEntry.getExerciseWeight())));
         }
 
+        ArrayAdapter<String> weightDropdown = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, weight);
+        weightDropdown.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        weightChoice.setAdapter(weightDropdown);
+
+        weightChoice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String chosenOrder = weightChoice.getSelectedItem().toString();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        
         repAxisSet = new LineDataSet(reps, "Reps");
-        weightAxisSet = new LineDataSet(weight, "Weight");
-        weightAxisSet.setColor(Color.RED);
         repAxisSet.setColor(Color.BLUE);
-        LineData chartData = new LineData(repAxisSet, weightAxisSet);
+        LineData chartData = new LineData(repAxisSet);
 
         XAxis xAxis = chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
