@@ -23,6 +23,7 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.DefaultValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
@@ -69,20 +70,12 @@ public class ProgressGraph extends Fragment {
         exerciseProgressActivity = new ExerciseProgressActivity();
         exerciseProgressActivity.sortDate(exerciseData, "Oldest");
 
-        date = new ArrayList<>();
-        reps = new ArrayList<>();
         weight = new ArrayList<>();
 
         for(WorkoutEntry workoutEntry : exerciseData) {
-            date.add(workoutEntry.getExerciseDate());
-            if(!weight.contains(workoutEntry.getExerciseWeight())) {
-                weight.add(workoutEntry.getExerciseWeight());
+            if(!weight.contains(workoutEntry.getExerciseWeight() + "kg")) {
+                weight.add(workoutEntry.getExerciseWeight() + "kg");
             }
-        }
-
-        for(int i = 0; i < exerciseData.size(); i++) {
-            WorkoutEntry repEntry = exerciseData.get(i);
-            reps.add(new BarEntry(i, Float.parseFloat(repEntry.getExerciseReps())));
         }
 
         ArrayAdapter<String> weightDropdown = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, weight);
@@ -92,8 +85,19 @@ public class ProgressGraph extends Fragment {
         weightChoice.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String chosenOrder = weightChoice.getSelectedItem().toString();
+                String chosenWeight = weightChoice.getSelectedItem().toString();
 
+                date = new ArrayList<>();
+                reps = new ArrayList<>();
+
+                for (int i = 0; i < exerciseData.size(); i++) {
+                    WorkoutEntry workoutEntry = exerciseData.get(i);
+                    if (chosenWeight.equals(workoutEntry.getExerciseWeight() + "kg")) {
+                        date.add(workoutEntry.getExerciseDate());
+                        reps.add(new Entry(i, Integer.parseInt(workoutEntry.getExerciseReps())));
+                    }
+                }
+                drawGraph(date, reps);
             }
 
             @Override
@@ -101,9 +105,15 @@ public class ProgressGraph extends Fragment {
 
             }
         });
-        
+
+        return view;
+    }
+
+    public void drawGraph(List<String> date, List<Entry> reps) {
+
         repAxisSet = new LineDataSet(reps, "Reps");
         repAxisSet.setColor(Color.BLUE);
+
         LineData chartData = new LineData(repAxisSet);
 
         XAxis xAxis = chart.getXAxis();
@@ -121,6 +131,7 @@ public class ProgressGraph extends Fragment {
         chart.setDoubleTapToZoomEnabled(false);
         chart.getXAxis().setDrawGridLines(false);
         chart.getAxisRight().setDrawGridLines(false);
+        chart.getAxisLeft().setDrawGridLines(false);
 
         chart.setData(chartData);
         chart.invalidate();
@@ -129,6 +140,5 @@ public class ProgressGraph extends Fragment {
         l.setTextSize(11f);
         l.setTextColor(Color.WHITE);
 
-        return view;
     }
 }
