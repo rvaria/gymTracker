@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical"
+    >
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/routineToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        />
+
+    <Spinner
+        android:id="@+id/routineSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="20sp" />
+
+    <ListView
+        android:id="@+id/exercises"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:dividerHeight="0.1dp"
+        />
+
+</LinearLayout>

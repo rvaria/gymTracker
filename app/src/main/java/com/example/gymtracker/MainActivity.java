@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button createRoutine;
     private Button viewRoutine;
+    private Button trackProgress;
     private String dialogPrompt;
     public EditText inputName;
 
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         createRoutine = findViewById(R.id.createRoutine);
         viewRoutine = findViewById(R.id.viewRoutine);
+        trackProgress = findViewById(R.id.trackProgress);
         dialogPrompt = "Enter your workout routine name";
 
 
@@ -58,6 +60,15 @@ public class MainActivity extends AppCompatActivity {
                 });
 
                 createBox.show();
+
+            }
+        });
+
+        trackProgress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent progress = new Intent(getApplicationContext(), TrackProgressActivity.class);
+                startActivity(progress);
 
             }
         });

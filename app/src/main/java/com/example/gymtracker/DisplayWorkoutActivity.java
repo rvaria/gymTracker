@@ -53,7 +53,7 @@ public class DisplayWorkoutActivity extends AppCompatActivity {
         displayDate = findViewById(R.id.date);
         addData = findViewById(R.id.addData);
 
-        displayDate.setText(cDay + "/" + cMonth + "/" + cYear);
+        displayDate.setText(cDay + "/" + (cMonth + 1) + "/" + cYear);
 
         exerciseDatabase = new ExerciseDatabase(this);
 
@@ -80,7 +80,8 @@ public class DisplayWorkoutActivity extends AppCompatActivity {
                 if(!workoutListAdapter.checkFilled()) {
                     Toast.makeText(getApplicationContext(), "Please fill in all the values!", Toast.LENGTH_SHORT).show();
                 } else {
-                    workoutListAdapter.addData(displayDate.getText().toString());
+                    Toast.makeText(getApplicationContext(), "Data has been added!", Toast.LENGTH_SHORT).show();
+                    workoutListAdapter.addData(displayDate.getText().toString(), routineName);
                 }
             }
         });
@@ -91,7 +92,7 @@ public class DisplayWorkoutActivity extends AppCompatActivity {
         DatePickerDialog datePicker = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                date = dayOfMonth + "/" + month + "/" + year;
+                date = dayOfMonth + "/" + (month + 1) + "/" + year;
                 displayDate.setText(date);
             }
         }, cYear, cMonth, cDay);

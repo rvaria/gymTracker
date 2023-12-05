@@ -103,11 +103,12 @@ public class WorkoutListAdapter extends ArrayAdapter<ExerciseData> {
         return true;
     }
 
-    public void addData(String date) {
+    public void addData(String date, String routine) {
         exerciseDatabase = new ExerciseDatabase(getContext());
         for(ExerciseData data : workoutItems) {
-            exerciseDatabase.addData(date, Integer.valueOf(data.getReps()),
-                    Double.valueOf(data.getWeight()), Integer.valueOf(data.getPosition()));
+            exerciseDatabase.addData(date, Integer.valueOf(data.getReps()), Double.valueOf(data.getWeight()),
+                    exerciseDatabase.getNumber(data.getExerciseName(), routine));
+
         }
     }
 }
